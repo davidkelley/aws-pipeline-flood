@@ -9,15 +9,12 @@ Description: "Creates a build, test and deployment pipeline."
 # optional so that you don't need to pass in a value when creating a stack.
 Parameters:
 
-  # A GitHub API Token that has permissions to access either a public or
-  # private repository.
-  #
-  # @see https://github.com/settings/tokens
   GitHubToken:
-    Type: String
-    NoEcho: true
+    Type: AWS::SSM::Parameter::Value<String>
+    Default: "/Secrets/GitHubToken"
     Description: |
-      A Github OAuth Token with public_repo or repo scope
+      Retrieves the GitHubToken from the AWS SSM Parameter Store
+    NoEcho: true
 
   # The GitHub repository to poll for changes. This parameter accepts both
   # the username/organization that owns the repository and the name of the
@@ -63,27 +60,59 @@ Parameters:
 
   # @secret
   #
-  # This secret is passed into the CodePipeline & CodeBuild projects via
-  # AWS SSM Parameter Store.
+  # This key is located inside Parameter Store and validates that it exists before
+  # the template executes.
   FloodApiKey:
-    Type: String
-    NoEcho: true
+    Type: AWS::SSM::Parameter::Name
     Description: |
-      The Flood.IO API Key used to communicate with the flood account.
+      The Flood.IO API Key parameter name used to communicate with the flood account.
+    Default: "/Secrets/FloodApiKey"
+    NoEcho: true
+
 
 # The required Resources section declares the AWS resources that you want to
 # include in the stack, such as a CodePipeline, CodeBuild and IAM Resources.
 Resources:
 
-  # Stores the Flood.IO account API Key into Parameter Store. This value
-  # can then be retrieved by any IAM Resource that has the necessary permissions.
-  FloodApiKeyParameter:
-    Type: AWS::SSM::Parameter
+  PipelineTriggerRule:
+    Type: AWS::Events::Rule
     Properties:
-      Name: /Secrets/FloodApiKey
-      Type: String
-      Value: !Ref FloodApiKey
-      Description: Flood.IO API Key
+      EventPattern:
+        source:
+          - aws.ssm
+        region:
+          - !Ref AWS::Region
+        detail:
+          name:
+            - !Ref FloodApiKey
+          operation:
+            - Update
+      State: ENABLED
+      Targets:
+        - Arn: !Sub "arn:${AWS::Partition}:codepipeline:${AWS::Region}:${Pipeline}"
+          RoleArn: TriggerRuleRole.Arn
+
+  TriggerRuleRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+        - Action: sts:AssumeRole
+          Effect: Allow
+          Principal:
+            Service: !Sub "events.${AWS::URLSuffix}"
+        Version: '2012-10-17'
+      Path: /
+      Policies:
+        - PolicyName: CloudFormationRole
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Action:
+                  - codepipeline:StartPipelineExecution
+                Effect: Allow
+                Resource:
+                  - !Sub "arn:${AWS::Partition}:codepipeline:${AWS::Region}:${Pipeline}"
 
   # This S3 bucket stores artifacts created by both CodeBuild and CodePipeline.
   # Artifacts are passed around the pipeline and can be accessed by different actions.
@@ -248,14 +277,31 @@ Resources:
         Version: '2012-10-17'
       Path: /
       Policies:
-        - PolicyName: CloudFormationRole
+        - PolicyName: RestrictedCloudFormationAccess
           PolicyDocument:
             Version: '2012-10-17'
             Statement:
               - Action:
+                  - 'cloudformation:CreateChangeSet'
+                Effect: Allow
+                Resource:
+                  - !Sub "arn:${AWS::Partition}:cloudformation:${AWS::Region}:aws:transform/Serverless-2016-10-31"
+              - Action:
+                  - 'cloudformation:ExecuteChangeSet'
+                Effect: Allow
+                Resource:
+                  - '*'
+                Condition:
+                  StringLike:
+                    cloudformation:ChangeSetName: !Sub "${AWS::StackName}-*"
+              - Action:
                   - '*'
                 Effect: Allow
-                Resource: '*'
+                Resource:
+                  - '*'
+                Condition:
+                  ForAllValues:StringLike:
+                    cloudformation:TemplateURL: !Sub "https://s3.${AWS::URLSuffix}/${PipelineArtifactStore}/*"
 
   # Deploys the IAM Role that CodePipeline uses, in-order to access services utilized
   # by the pipeline resource defined in this file.
@@ -282,11 +328,6 @@ Resources:
                   - !Sub "arn:${AWS::Partition}:s3:::${PipelineArtifactStore}"
                   - !Sub "arn:${AWS::Partition}:s3:::${PipelineArtifactStore}/*"
               - Action:
-                  - 'codebuild:*'
-                Effect: Allow
-                Resource:
-                  - !Sub "arn:${AWS::Partition}:codebuild:${AWS::Region}:${AWS::AccountId}:project/${Build}"
-              - Action:
                   - 'cloudformation:CreateStack'
                   - 'cloudformation:DescribeStacks'
                   - 'cloudformation:DeleteStack'
@@ -298,13 +339,17 @@ Resources:
                   - 'cloudformation:SetStackPolicy'
                 Effect: Allow
                 Resource:
-                  - !Sub "arn:${AWS::Partition}:cloudformation:${AWS::Region}:${AWS::AccountId}:*/${Project}*/*"
-                  - '*'
+                  - !Sub "arn:${AWS::Partition}:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/${AWS::StackName}*/*"
               - Action:
                   - 'iam:PassRole'
                 Effect: Allow
                 Resource:
-                  - '*'
+                  - !GetAtt CloudformationRole.Arn
+              - Action:
+                  - 'codebuild:*'
+                Effect: Allow
+                Resource:
+                  - !GetAtt Build.Arn
 
   # Deploys the IAM Role that CodeBuild uses to successfully complete any actions
   # defined inside the buildspec.yml file.
@@ -332,11 +377,10 @@ Resources:
                 Resource: '*'
               - Action:
                   - 's3:*'
-                  - 'cloudformation:*'
                 Effect: Allow
                 Resource: '*'
               - Action:
                   - ssm:GetParameters
                 Effect: Allow
                 Resource:
-                  - !Sub "arn:${AWS::Partition}:ssm:${AWS::Region}:${AWS::AccountId}:parameter${FloodApiKeyParameter}"
+                  - !Sub "arn:${AWS::Partition}:ssm:${AWS::Region}:${AWS::AccountId}:parameter${FloodApiKey}"
