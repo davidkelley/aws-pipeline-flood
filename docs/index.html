@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl">
+  <title data-ice="title">Home | Event Streamer Service</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+<meta name="description" content="Pushes CodePipeline, CodeBuild, Build Logs and CloudFormation updates to IoT"><meta property="og:type" content="website"><meta property="og:url" content="http://unwrapped.notonthehighstreet.com/aws-pipeline-streamer/"><meta property="og:site_name" content="Event Streamer Service"><meta property="og:title" content="Event Streamer Service"><meta property="og:image" content="https://cdn.notonthehighstreet.com/images/header/logos/tag_logo_uk@2x.png"><meta property="og:description" content="Pushes CodePipeline, CodeBuild, Build Logs and CloudFormation updates to IoT"><meta property="og:author" content="https://twitter.com/notonthehighst"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="Event Streamer Service"><meta property="twitter:description" content="Pushes CodePipeline, CodeBuild, Build Logs and CloudFormation updates to IoT"><meta property="twitter:image" content="https://cdn.notonthehighstreet.com/images/header/logos/tag_logo_uk@2x.png"></head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./" style="display: flex; align-items: center;"><img src="./image/brand_logo.png" style="width:34px;"></a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  <a href="test.html" data-ice="testLink">Test</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+<a style="position:relative; top:3px;" href="https://github.com/notonthehighstreet/aws-pipeline-streamer"><img width="20px" src="./image/github.png"></a></header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-AWS_REGION">AWS_REGION</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-FLOODS_PATH">FLOODS_PATH</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-FLOOD_API_KEY">FLOOD_API_KEY</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-FLOOD_API_URI">FLOOD_API_URI</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-GRIDS_PATH">GRIDS_PATH</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-LOG_LEVEL">LOG_LEVEL</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://github.com/trentm/node-bunyan">Logger</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pipeline">pipeline</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-handler">handler</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pipeline-pipeline">pipeline/pipeline</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/functions/pipeline/pipeline/artifact.js~Artifact.html">Artifact</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/functions/pipeline/pipeline/resume.js~Resume.html">Resume</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/functions/pipeline/pipeline/start.js~Start.html">Start</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-FILE_BUCKET">FILE_BUCKET</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-RUNNING">RUNNING</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-STATE_MACHINE">STATE_MACHINE</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-SUCCEEDED">SUCCEEDED</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pipeline-pipeline-parameters">pipeline/pipeline/parameters</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/functions/pipeline/pipeline/parameters/parameters.js~Parameters.html">Parameters</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pipeline-pipeline-uploader">pipeline/pipeline/uploader</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/functions/pipeline/pipeline/uploader/file.js~File.html">File</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/functions/pipeline/pipeline/uploader/uploader.js~Uploader.html">Uploader</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pipeline-pipeline-validate">pipeline/pipeline/validate</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-validate">validate</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-Schema">Schema</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#steps">steps</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-parseFloodResponse">parseFloodResponse</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-transformObjectProps">transformObjectProps</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#steps-create">steps/create</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-handler">handler</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#steps-remove">steps/remove</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-handler">handler</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#steps-results">steps/results</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-handler">handler</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#steps-status">steps/status</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-handler">handler</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><div data-ice="index" class="github-markdown"><p><img src="/.github/images/logo-small.png" alt="Logo"></p>
+<h1 id="codepipeline-flood-io-action">CodePipeline Flood.IO Action</h1><p><img src="/.github/images/Flood.png" alt="Architecture"></p>
+<p>This project provides an integration for <a href="https://flood.io">Flood.IO</a> in <a href="https://aws.amazon.com/documentation/codepipeline/">AWS CodePipeline</a>.</p>
+<p>Enabling automated load testing as an action within a pipeline. You may pass &quot;flood files&quot; (Jmeter, Selenium, etc.) from a pipeline artifact, as well as optionally define parameter overrides using artifact attribute keys (as described below).</p>
+<p>In-order to ensure your Pipeline has necessary permissions to invoke a Lambda function, follow the <a href="http://docs.aws.amazon.com/codepipeline/latest/userguide/actions-invoke-lambda-function.html">setup steps here</a>.</p>
+<p>The flood test is monitored by an AWS Step Functions State Machine (as described above).</p>
+<p>An example action definition inside a CodePipeline CloudFormation resource definition:</p>
+<pre><code class="lang-yaml"><code class="source-code prettyprint">- Name: Testing
+  Actions:
+    - Name: Flood
+      RunOrder: 1
+      InputArtifacts:
+        - Name: SourceOutput
+        - Name: TestStackOutput
+      ActionTypeId:
+        Category: Invoke
+        Owner: AWS
+        Version: 1
+        Provider: Lambda
+      OutputArtifacts:
+        - Name: BuildOutput
+      Configuration:
+        FunctionName: !ImportValue FloodTestingFunctionName
+        UserParameters: !Sub |
+          {
+            &quot;Parameters&quot;: {
+              &quot;SOME_VAL&quot;: &quot;${PipelineParameter}&quot;,
+              &quot;API_URL&quot;: {
+                &quot;Fn::GetParam&quot;: [&quot;TestStackOutput&quot;, &quot;Outputs.json&quot;, &quot;ApiUrl&quot;]
+              }
+            },
+            &quot;Flood&quot;: {
+              &quot;tool&quot;: &quot;jmeter&quot;
+            },
+            &quot;Files&quot;: [
+              &quot;SourceOutput::tests/load-test-a.jmx&quot;,
+              &quot;SourceOutput::tests/load-test-b.jmx&quot;
+            ],
+            &quot;Grids&quot;: [{
+              &quot;region&quot;: &quot;us-east-1&quot;,
+              &quot;instance_quantity&quot;: 4,
+              &quot;stop_after&quot;: 120
+            }]
+          }</code>
+</code></pre>
+<p>For a full definition of what you can define inside the <code>UserParameters</code> key, see <a href="/functions/pipeline/pipeline/validate/schema.js">the JSON Schema file</a>.</p>
+<p>Event structure needs to follow this structure to be correctly read by flood.io.
+The files list needs to be a list of presigned/public urls that the script can download.</p>
+<p>NOTE, empty values are not allowed
+NOTE2, if the <code>grid uuid</code> prop is set, it has to match an existing grid or it will return 404</p>
+<pre><code><code class="source-code prettyprint">{
+  files: [
+    &apos;https://s3-eu-west-1.amazonaws.com/floodfiles/floodtest.jmx&apos;,
+  ],
+  flood: {
+    tool: &apos;jmeter&apos;,
+    // name: &apos;&apos;,
+    // notes: &apos;&apos;,
+    // tag_list: &apos;&apos;,
+    // privacy_flag: &apos;&apos;,
+    // threads: &apos;&apos;,
+    // rampup: &apos;&apos;,
+    // duration: &apos;&apos;,
+    // override_hosts: &apos;&apos;,
+    // override_parameters: &apos;&apos;,
+    grids: [
+      {
+        // uuid: &apos;existing-grid-id&apos;,
+        region: &apos;eu-west-1&apos;,
+        instance_type: &apos;m4.xlarge&apos;,
+        // instance_quantity: &apos;&apos;,
+        stop_after: &apos;60&apos;,
+        infrastructure: &apos;demand&apos;,
+        // aws_platform: &apos;&apos;,
+        // aws_tags: &apos;&apos;,
+        // aws_availability_zone: &apos;&apos;,
+        // aws_spot_price: &apos;&apos;,
+        // credential_id: &apos;&apos;,
+        // aws_vpc_identifier: &apos;&apos;,
+        // aws_vpc_subnet_public: &apos;&apos;,
+        // aws_vpc_subnet_private: &apos;&apos;,
+        // aws_vpc_security_groups: &apos;&apos;,
+      },
+    ],
+  },
+};</code>
+</code></pre></div>
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.0.4)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

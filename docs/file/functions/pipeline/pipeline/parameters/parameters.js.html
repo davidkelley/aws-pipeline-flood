@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../../../">
+  <title data-ice="title">functions/pipeline/pipeline/parameters/parameters.js | Event Streamer Service</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+<meta name="description" content="Pushes CodePipeline, CodeBuild, Build Logs and CloudFormation updates to IoT"><meta property="og:type" content="website"><meta property="og:url" content="http://unwrapped.notonthehighstreet.com/aws-pipeline-streamer/"><meta property="og:site_name" content="Event Streamer Service"><meta property="og:title" content="Event Streamer Service"><meta property="og:image" content="https://cdn.notonthehighstreet.com/images/header/logos/tag_logo_uk@2x.png"><meta property="og:description" content="Pushes CodePipeline, CodeBuild, Build Logs and CloudFormation updates to IoT"><meta property="og:author" content="https://twitter.com/notonthehighst"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="Event Streamer Service"><meta property="twitter:description" content="Pushes CodePipeline, CodeBuild, Build Logs and CloudFormation updates to IoT"><meta property="twitter:image" content="https://cdn.notonthehighstreet.com/images/header/logos/tag_logo_uk@2x.png"></head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./" style="display: flex; align-items: center;"><img src="./image/brand_logo.png" style="width:34px;"></a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  <a href="test.html" data-ice="testLink">Test</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+<a style="position:relative; top:3px;" href="https://github.com/notonthehighstreet/aws-pipeline-streamer"><img width="20px" src="./image/github.png"></a></header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-AWS_REGION">AWS_REGION</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-FLOODS_PATH">FLOODS_PATH</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-FLOOD_API_KEY">FLOOD_API_KEY</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-FLOOD_API_URI">FLOOD_API_URI</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-GRIDS_PATH">GRIDS_PATH</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-LOG_LEVEL">LOG_LEVEL</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://github.com/trentm/node-bunyan">Logger</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pipeline">pipeline</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-handler">handler</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pipeline-pipeline">pipeline/pipeline</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/functions/pipeline/pipeline/artifact.js~Artifact.html">Artifact</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/functions/pipeline/pipeline/resume.js~Resume.html">Resume</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/functions/pipeline/pipeline/start.js~Start.html">Start</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-FILE_BUCKET">FILE_BUCKET</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-RUNNING">RUNNING</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-STATE_MACHINE">STATE_MACHINE</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-SUCCEEDED">SUCCEEDED</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pipeline-pipeline-parameters">pipeline/pipeline/parameters</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/functions/pipeline/pipeline/parameters/parameters.js~Parameters.html">Parameters</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pipeline-pipeline-uploader">pipeline/pipeline/uploader</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/functions/pipeline/pipeline/uploader/file.js~File.html">File</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/functions/pipeline/pipeline/uploader/uploader.js~Uploader.html">Uploader</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pipeline-pipeline-validate">pipeline/pipeline/validate</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-validate">validate</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-Schema">Schema</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#steps">steps</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-parseFloodResponse">parseFloodResponse</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-transformObjectProps">transformObjectProps</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#steps-create">steps/create</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-handler">handler</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#steps-remove">steps/remove</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-handler">handler</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#steps-results">steps/results</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-handler">handler</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#steps-status">steps/status</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-handler">handler</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">functions/pipeline/pipeline/parameters/parameters.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import wrappedError from &apos;error/wrapped&apos;;
+import typedError from &apos;error/typed&apos;;
+
+/**
+ * An unsupported parameter value object was encountered.
+ *
+ * @type {Error}
+ */
+const artifactParameterError = typedError({
+  message: &apos;Unsupported object in &quot;{key}&quot;&apos;,
+  type: &apos;pipeline.parameters&apos;,
+});
+
+/**
+ * The remote artifact could not be retrieved.
+ *
+ * @type {Error}
+ */
+const remoteArtifactError = wrappedError({
+  message: &apos;Failed to retrieve remote artifact &quot;{path}&quot;&apos;,
+  type: &apos;pipeline.artifact.remote&apos;,
+});
+
+/**
+ * The remote artifact file did not contain a truthy key value.
+ *
+ * @type {Error}
+ */
+const remoteArtifactValueError = wrappedError({
+  message: &apos;Value was null or undefined for &quot;{path}&quot;&apos;,
+  type: &apos;pipeline.artifact.value&apos;,
+});
+
+/**
+ * The defined remote artifact does not exist or access has not been granted.
+ *
+ * @type {Error}
+ */
+const artifactNotFound = typedError({
+  message: &apos;Artifact &quot;{artifactName}&quot; not a valid InputArtifact&apos;,
+  type: &apos;pipeline.artifact.not_found&apos;,
+});
+
+/**
+ * Enables the defining of parameters which are passed as overrides to the
+ * flood files which are sent to Flood.IO.
+ *
+ * Parameters can be defined as a static string or as an object containing
+ * the &quot;Fn::GetParam&quot; key, which behaves in a similar fashion to the
+ * CloudFormation parameter overrides function.
+ */
+export default class Parameters {
+  /**
+   * Constructs a new Parameter instance.
+   *
+   * @param {Object[String, String, Object]} parameters - an object denoting all
+   *  parameters which are to be sent to all Flood files. The values inside
+   *  this object can either be static strings, or objects containing keys
+   *  to retrieve values from artifact files.
+   * @param {Array[Artifact]} artifacts - an array of {@link Artifact} instances.
+   */
+  constructor(parameters, artifacts) {
+    /**
+     * An array of parameter overrides as either a static string or an object
+     * containing a Fn::GetParam key.
+     *
+     * @type {Array[String, Object]}
+     */
+    this.parameters = parameters;
+    /**
+     * An object containing {@link Artifact} instances, with the keys denoting
+     * the logical name of the artifact inside CodePipeline.
+     *
+     * @type {Object}
+     */
+    this.artifacts = artifacts;
+  }
+
+  /**
+   * Convert all parameters to their resolves keys and values.
+   *
+   * @return {Object}
+   */
+  async toObject() {
+    const entries = await Promise.all(this.toEntries());
+    return entries.reduce((memo, [key, val]) =&gt; {
+      const obj = memo;
+      obj[key] = val;
+      return memo;
+    }, {});
+  }
+
+  /**
+   * @private
+   *
+   * Map all parameter keys to their respective resolved values and return an
+   * array of keys &amp; value tuples.
+   *
+   * Note that this method returns an array of promises.
+   *
+   * @return {Array[Array[String, String]]} an array of iterable entries.
+   */
+  toEntries() {
+    return Object.keys(this.parameters).map(async (key) =&gt; {
+      const obj = this.parameters[key];
+      if (typeof obj === &apos;string&apos;) {
+        return [key, obj];
+      }
+      const properties = obj[&apos;Fn::GetParam&apos;];
+      if (!properties) {
+        throw artifactParameterError({ key });
+      } else {
+        try {
+          const val = await this.fetch(...properties);
+          return [key, val];
+        } catch (err) {
+          throw remoteArtifactError(err, {
+            path: properties.join(&apos;::&apos;),
+          });
+        }
+      }
+    });
+  }
+
+  /**
+   * Fetch the value of a specific parameter using the key found inside a json file
+   * inside the specific artifact.
+   *
+   * @param {String} artifactName - the name of the artifact the file resides in.
+   * @param {String} filename - The name of the JSON file inside the artifact
+   * @param {String} key - The property key inside the JSON file
+   *
+   * @return {String} the value of the key inside the JSON file, inside the artifact.
+   */
+  async fetch(artifactName, filename, key) {
+    const artifact = this.artifacts[artifactName];
+    if (!artifact) {
+      throw artifactNotFound({ artifactName });
+    } else {
+      await artifact.ready();
+      const value = artifact.attribute(filename, key);
+      if (!value) {
+        throw remoteArtifactValueError({
+          path: `${artifactName}::${filename}::${key}`,
+        });
+      } else {
+        return value;
+      }
+    }
+  }
+
+  /**
+   * Transforms all parameters to a Flood.IO compatible parameter overrides
+   * string.
+   *
+   * This function will first resolve all functions with a call to {@link Parameters#toObject}.
+   *
+   * @return {String} a Java parameter overrides string in the form `-Dkey=&quot;val&quot;`.
+   */
+  async toOverrides() {
+    const obj = await this.toObject();
+    return Object.keys(obj).map(key =&gt; `-D${key}=&quot;${obj[key]}&quot;`).join(&apos; &apos;);
+  }
+}
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.0.4)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+{
+  "_links": {
+    "self": {
+      "href": "/api/floods/VCFstUfl0AMdtaKYBo5d7A"
+    }
+  },
+  "uuid": "VCFstUfl0AMdtaKYBo5d7A",
+  "batch_id": "1VVGD5LBVvuatWEJ9SB8aA",
+  "apdex": null,
+  "tool": "jmeter",
+  "name": "MyTest",
+  "notes": null,
+  "threads": 10,
+  "rampup": null,
+  "duration": null,
+  "tag_list": [
+    "ci",
+    "shakeout"
+  ],
+  "status": "queued",
+  "permalink": "https://flood.io/VCFstUfl0AMdtaKYBo5d7A",
+  "remote_errors": null,
+  "started": null,
+  "stopped": null,
+  "_embedded": {
+    "grids": [
+      {
+        "_links": {
+          "self": {
+            "href": "/api/grids/hg8ZjZcifgsuQvDfcnBONw"
+          }
+        },
+        "uuid": "hg8ZjZcifgsuQvDfcnBONw",
+        "batch_id": "1VVGD5LBVvuatWEJ9SB8aA",
+        "name": "jubilant-peak-production-hg8ZjZcifgsuQvDfcnBONw",
+        "region": "us-west-2",
+        "origin": "US West (Oregon)",
+        "instance_quantity": 1,
+        "instance_type": "m4.xlarge",
+        "infrastructure": "demand",
+        "stop_after": 60,
+        "status": "starting",
+        "nodes": []
+      }
+    ],
+    "files": [
+      {
+        "name": "lRFFUcXvSIp7pHftfnC7x8",
+        "href": "..."
+      }
+    ],
+    "archives": []
+  }
+}

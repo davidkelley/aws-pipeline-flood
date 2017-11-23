@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Status of flood suite Handles successful query Calling handler Retrieved flood status 1`] = `
+Array [
+  Array [
+    Object {
+      "auth": Object {
+        "user": "mock-api-key",
+      },
+      "uri": "https://api.flood.io/floods/IIf79FZ7pP3y5yFRXgvqbw",
+    },
+  ],
+]
+`;
+
+exports[`Status of flood suite Handles successful query Calling handler Returned the status to the callback 1`] = `
+Array [
+  Array [
+    null,
+    Object {
+      "flood": Object {
+        "uuid": "IIf79FZ7pP3y5yFRXgvqbw",
+      },
+      "grid": Object {
+        "uuid": "rNYbrpY0jOzqnl3buVNoJA",
+      },
+      "status": "queued",
+    },
+  ],
+]
+`;
+
+exports[`Status of flood suite Handles unsuccesful response  Calling handler Returned the status to the callback 1`] = `
+Array [
+  Array [
+    [StatusCodeError: 404 - ""],
+  ],
+]
+`;

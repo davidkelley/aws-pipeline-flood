@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Result of flood suite Handles successful query Calling handler Requested the flood results 1`] = `
+Array [
+  Array [
+    Object {
+      "auth": Object {
+        "user": "mock-api-key",
+      },
+      "uri": "https://api.flood.io/floods/123123/report",
+    },
+  ],
+]
+`;
+
+exports[`Result of flood suite Handles successful query Calling handler Returned the summary to the callback 1`] = `
+Array [
+  Array [
+    null,
+    "mock",
+  ],
+]
+`;
+
+exports[`Result of flood suite Handles unsuccesful response  Calling handler Returned the error to the callback 1`] = `
+Array [
+  Array [
+    [StatusCodeError: 404 - ""],
+  ],
+]
+`;

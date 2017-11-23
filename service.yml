@@ -1,0 +1,373 @@
+AWSTemplateFormatVersion: "2010-09-09"
+
+Transform: AWS::Serverless-2016-10-31
+
+Description: "Deploys a State Machine that controls Flood.IO grids and load tests"
+
+Parameters:
+
+  Name:
+    Type: String
+    Default: aws-pipeline-flood
+    Description: A logical resource name for the service
+
+Resources:
+
+  StateMachine:
+    Type: AWS::StepFunctions::StateMachine
+    Properties:
+      RoleArn: !GetAtt StatesExecutionRole.Arn
+      DefinitionString: !Sub |
+        {
+          "Comment": "Run a Flood.IO Load Test",
+          "StartAt": "CreateFlood",
+          "States": {
+
+            "CreateFlood": {
+              "Type": "Task",
+              "Resource": "${CreateFloodFunction.Arn}",
+              "Next": "WaitForFlood"
+            },
+
+            "WaitForFlood": {
+              "Type": "Wait",
+              "Seconds": 60,
+              "Next": "GetFloodStatus"
+            },
+
+            "GetFloodStatus": {
+              "Type": "Task",
+              "Resource": "${FloodStatusFunction.Arn}",
+              "Next": "IsFloodComplete"
+            },
+
+            "IsFloodComplete": {
+              "Type": "Choice",
+              "Choices": [
+                {
+                  "Not": {
+                    "Variable": "$.status",
+                    "StringEquals": "finished"
+                  },
+                  "Next": "WaitForFlood"
+                },
+                {
+                  "Variable": "$.status",
+                  "StringEquals": "finished",
+                  "Next": "DeleteGrid"
+                }
+              ]
+            },
+
+            "DeleteGrid": {
+              "Type": "Task",
+              "Resource": "${DeleteGridFunction.Arn}",
+              "Next": "GetResults"
+            },
+
+            "GetResults": {
+              "Type": "Task",
+              "Resource": "${FloodResultsFunction.Arn}",
+              "End": true
+            }
+          }
+        }
+
+  StatesExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      Path: !Sub "/${Name}/"
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: "Allow"
+            Principal:
+              Service:
+                - !Sub "states.${AWS::Region}.${AWS::URLSuffix}"
+            Action: "sts:AssumeRole"
+      Path: "/"
+      Policies:
+        - PolicyName: StatesExecutionPolicy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - lambda:InvokeFunction
+                Resource:
+                  - !GetAtt CreateFloodFunction.Arn
+                  - !GetAtt FloodStatusFunction.Arn
+                  - !GetAtt DeleteGridFunction.Arn
+                  - !GetAtt FloodResultsFunction.Arn
+
+  ControlFileStore:
+    Type: AWS::S3::Bucket
+    Properties:
+      VersioningConfiguration:
+        Status: Enabled
+      LifecycleConfiguration:
+        Rules:
+          - Status: Enabled
+            ExpirationInDays: 1
+
+  ControlFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: pipeline.handler
+      Runtime: nodejs6.10
+      CodeUri: ../out
+      Timeout: 10
+      Role: !GetAtt ControlFunctionExecutionRole.Arn
+      Environment:
+        Variables:
+          STATE_MACHINE: !Ref StateMachine
+          FILE_BUCKET: !Ref ControlFileStore
+
+  ControlFunctionLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub "/aws/lambda/${ControlFunction}"
+      RetentionInDays: 3
+
+  ControlFunctionExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      Path: !Sub "/${Name}/"
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: "Allow"
+            Principal:
+              Service:
+                - !Sub "lambda.${AWS::URLSuffix}"
+            Action: sts:AssumeRole
+
+  ControlFunctionExecutionPolicy:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyName: ControlFunctionExecutionPolicy
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Action:
+              - logs:CreateLogGroup
+              - logs:CreateLogStream
+              - logs:PutLogEvents
+            Resource:
+              - !GetAtt ControlFunctionLogGroup.Arn
+          - Effect: Allow
+            Action:
+              - s3:PutObject
+              - s3:GetObject
+            Resource:
+              - !GetAtt ControlFileStore.Arn
+              - !Sub "${ControlFileStore.Arn}/*"
+          - Effect: Allow
+            Action:
+              - codepipeline:PutJobSuccessResult
+              - codepipeline:PutJobFailureResult
+            Resource:
+              - "*"
+          - Effect: Allow
+            Action:
+              - states:DescribeExecution
+              - states:StartExecution
+            Resource:
+              - "*"
+      Roles:
+        - !Ref ControlFunctionExecutionRole
+
+  FloodResultsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: results.handler
+      Runtime: nodejs6.10
+      CodeUri: ../out
+      Timeout: 10
+      Role: !GetAtt FloodResultsFunctionExecutionRole.Arn
+
+  FloodResultsFunctionLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub "/aws/lambda/${FloodResultsFunction}"
+      RetentionInDays: 3
+
+  FloodResultsFunctionExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      Path: !Sub "/${Name}/"
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: "Allow"
+            Principal:
+              Service:
+                - !Sub "lambda.${AWS::URLSuffix}"
+            Action: sts:AssumeRole
+
+  FloodResultsFunctionExecutionPolicy:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyName: FloodResultsFunctionExecutionPolicy
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Action:
+              - logs:CreateLogGroup
+              - logs:CreateLogStream
+              - logs:PutLogEvents
+            Resource:
+              - !Sub "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:${FloodResultsFunctionLogGroup}"
+      Roles:
+        - !Ref FloodResultsFunctionExecutionRole
+
+  DeleteGridFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: remove.handler
+      Runtime: nodejs6.10
+      CodeUri: ../out
+      Timeout: 10
+      Role: !GetAtt DeleteGridFunctionExecutionRole.Arn
+
+  DeleteGridFunctionLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub "/aws/lambda/${DeleteGridFunction}"
+      RetentionInDays: 3
+
+  DeleteGridFunctionExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      Path: !Sub "/${Name}/"
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: "Allow"
+            Principal:
+              Service:
+                - !Sub "lambda.${AWS::URLSuffix}"
+            Action: sts:AssumeRole
+
+  DeleteGridFunctionExecutionPolicy:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyName: DeleteGridFunctionExecutionPolicy
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Action:
+              - logs:CreateLogGroup
+              - logs:CreateLogStream
+              - logs:PutLogEvents
+            Resource:
+              - !Sub "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:${DeleteGridFunctionLogGroup}"
+      Roles:
+        - !Ref DeleteGridFunctionExecutionRole
+
+  FloodStatusFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: status.handler
+      Runtime: nodejs6.10
+      CodeUri: ../out
+      Timeout: 10
+      Role: !GetAtt FloodStatusFunctionExecutionRole.Arn
+
+  FloodStatusFunctionLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub "/aws/lambda/${FloodStatusFunction}"
+      RetentionInDays: 3
+
+  FloodStatusFunctionExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      Path: !Sub "/${Name}/"
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: "Allow"
+            Principal:
+              Service:
+                - !Sub "lambda.${AWS::URLSuffix}"
+            Action: sts:AssumeRole
+
+  FloodStatusFunctionExecutionPolicy:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyName: FloodStatusFunctionExecutionPolicy
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Action:
+              - logs:CreateLogGroup
+              - logs:CreateLogStream
+              - logs:PutLogEvents
+            Resource:
+              - !Sub "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:${FloodStatusFunctionLogGroup}"
+      Roles:
+        - !Ref FloodStatusFunctionExecutionRole
+
+  CreateFloodFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: create.handler
+      Runtime: nodejs6.10
+      CodeUri: ../out
+      Timeout: 10
+      Role: !GetAtt CreateFloodFunctionExecutionRole.Arn
+
+  CreateFloodFunctionLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub "/aws/lambda/${CreateFloodFunction}"
+      RetentionInDays: 3
+
+  CreateFloodFunctionExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      Path: !Sub "/${Name}/"
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: "Allow"
+            Principal:
+              Service:
+                - !Sub "lambda.${AWS::URLSuffix}"
+            Action: sts:AssumeRole
+
+  CreateFloodFunctionExecutionPolicy:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyName: CreateFloodFunctionExecutionPolicy
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Action:
+              - logs:CreateLogGroup
+              - logs:CreateLogStream
+              - logs:PutLogEvents
+            Resource:
+              - !Sub "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:${CreateFloodFunctionLogGroup}"
+      Roles:
+        - !Ref CreateFloodFunctionExecutionRole
+
+Outputs:
+
+  ControlFunction:
+    Description: CodePipeline Function Name
+    Value: !Ref ControlFunction
+    Export:
+      Name: FloodTestingFunctionName
+
+  ControlFunctionArn:
+    Description: CodePipeline Function ARN
+    Value: !GetAtt ControlFunction.Arn
+    Export:
+      Name: FloodTestingFunctionArn

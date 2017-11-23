@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../../">
+  <title data-ice="title">functions/pipeline/pipeline/start.js | Event Streamer Service</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+<meta name="description" content="Pushes CodePipeline, CodeBuild, Build Logs and CloudFormation updates to IoT"><meta property="og:type" content="website"><meta property="og:url" content="http://unwrapped.notonthehighstreet.com/aws-pipeline-streamer/"><meta property="og:site_name" content="Event Streamer Service"><meta property="og:title" content="Event Streamer Service"><meta property="og:image" content="https://cdn.notonthehighstreet.com/images/header/logos/tag_logo_uk@2x.png"><meta property="og:description" content="Pushes CodePipeline, CodeBuild, Build Logs and CloudFormation updates to IoT"><meta property="og:author" content="https://twitter.com/notonthehighst"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="Event Streamer Service"><meta property="twitter:description" content="Pushes CodePipeline, CodeBuild, Build Logs and CloudFormation updates to IoT"><meta property="twitter:image" content="https://cdn.notonthehighstreet.com/images/header/logos/tag_logo_uk@2x.png"></head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./" style="display: flex; align-items: center;"><img src="./image/brand_logo.png" style="width:34px;"></a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  <a href="test.html" data-ice="testLink">Test</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+<a style="position:relative; top:3px;" href="https://github.com/notonthehighstreet/aws-pipeline-streamer"><img width="20px" src="./image/github.png"></a></header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-AWS_REGION">AWS_REGION</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-FLOODS_PATH">FLOODS_PATH</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-FLOOD_API_KEY">FLOOD_API_KEY</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-FLOOD_API_URI">FLOOD_API_URI</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-GRIDS_PATH">GRIDS_PATH</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-LOG_LEVEL">LOG_LEVEL</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://github.com/trentm/node-bunyan">Logger</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pipeline">pipeline</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-handler">handler</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pipeline-pipeline">pipeline/pipeline</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/functions/pipeline/pipeline/artifact.js~Artifact.html">Artifact</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/functions/pipeline/pipeline/resume.js~Resume.html">Resume</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/functions/pipeline/pipeline/start.js~Start.html">Start</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-FILE_BUCKET">FILE_BUCKET</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-RUNNING">RUNNING</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-STATE_MACHINE">STATE_MACHINE</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-SUCCEEDED">SUCCEEDED</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pipeline-pipeline-parameters">pipeline/pipeline/parameters</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/functions/pipeline/pipeline/parameters/parameters.js~Parameters.html">Parameters</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pipeline-pipeline-uploader">pipeline/pipeline/uploader</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/functions/pipeline/pipeline/uploader/file.js~File.html">File</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/functions/pipeline/pipeline/uploader/uploader.js~Uploader.html">Uploader</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pipeline-pipeline-validate">pipeline/pipeline/validate</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-validate">validate</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-Schema">Schema</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#steps">steps</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-parseFloodResponse">parseFloodResponse</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-transformObjectProps">transformObjectProps</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#steps-create">steps/create</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-handler">handler</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#steps-remove">steps/remove</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-handler">handler</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#steps-results">steps/results</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-handler">handler</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#steps-status">steps/status</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-handler">handler</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">functions/pipeline/pipeline/start.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import { StepFunctions } from &apos;aws-sdk&apos;;
+import typedError from &apos;error/typed&apos;;
+import wrappedError from &apos;error/wrapped&apos;;
+
+// import Logger from &apos;../../logger&apos;;
+import { AWS_REGION } from &apos;../../globals&apos;;
+import { STATE_MACHINE } from &apos;./constants&apos;;
+
+import Uploader from &apos;./uploader&apos;;
+import Artifact from &apos;./artifact&apos;;
+import Parameters from &apos;./parameters&apos;;
+import validate from &apos;./validate&apos;;
+
+/**
+ * A validation error was encountered
+ *
+ * @type {Error}
+ */
+const inputArtifactsError = typedError({
+  message: &apos;No InputArtifacts defined.&apos;,
+  type: &apos;pipeline.start&apos;,
+});
+
+/**
+ * A validation error was encountered
+ *
+ * @type {Error}
+ */
+const executionError = wrappedError({
+  message: &apos;State machine could not be executed. ({arn})&apos;,
+  type: &apos;pipeline.start.execution&apos;,
+});
+
+/**
+ * Handles initiating the execution of a Step Functions state machine, which handles
+ * starting a Flood.IO load test.
+ *
+ * This class uses the object received from CodePipeline to resolve UserParameter
+ * remote references and forms the input payload.
+ */
+export default class Start {
+  /**
+   * Starts a new execution of a Step Functions state machine by validating any
+   * configuration and resolving remote artifact references for flood files as well
+   * as any artifact parameters.
+   *
+   * @example
+   * ```
+   *  {
+   *     &quot;CodePipeline.job&quot;: {
+   *         &quot;id&quot;: &quot;11111111-abcd-1111-abcd-111111abcdef&quot;,
+   *         &quot;accountId&quot;: &quot;111111111111&quot;,
+   *         &quot;data&quot;: {
+   *             &quot;actionConfiguration&quot;: {
+   *                 &quot;configuration&quot;: {
+   *                     &quot;FunctionName&quot;: &quot;MyLambdaFunctionForAWSCodePipeline&quot;,
+   *                     &quot;UserParameters&quot;: &quot;some-input-such-as-a-URL&quot;
+   *                 }
+   *             },
+   *             &quot;inputArtifacts&quot;: [
+   *                 {
+   *                     &quot;location&quot;: {
+   *                         &quot;s3Location&quot;: {
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+   *                             &quot;bucketName&quot;: &quot;codepipeline-us-east-2-1234567890&quot;,
+   *                             &quot;objectKey&quot;: &quot;frj9q0j09aj09j.zip&quot;
+=======
+   *                             &quot;bucketName&quot;: &quot;the name of the bucket configured as the pipeline&quot; +
+   *                                  &quot;artifact store in Amazon S3,&quot; +
+   *                                  &quot;for example codepipeline-us-east-2-1234567890&quot;,
+   *                             &quot;objectKey&quot;: &quot;the name of the application,&quot; +
+   *                                  &quot;for example CodePipelineDemoApplication.zip&quot;
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; ad649bc7c07cd9a69a6d2b944ff42280c3a740c8
+   *                         },
+   *                         &quot;type&quot;: &quot;S3&quot;
+   *                     },
+   *                     &quot;revision&quot;: null,
+   *                     &quot;name&quot;: &quot;ArtifactName&quot;
+   *                 }
+   *             ],
+   *             &quot;outputArtifacts&quot;: [],
+   *             &quot;artifactCredentials&quot;: {
+   *                 &quot;secretAccessKey&quot;: &quot;....&quot;,
+   *                 &quot;sessionToken&quot;: &quot;....&quot;,
+   *                 &quot;accessKeyId&quot;: &quot;....&quot;
+   *             },
+   *             &quot;continuationToken&quot;: &quot;A continuation token if continuing job&quot;
+   *         }
+   *     }
+   *  }
+   * ```
+   *
+   * @param {Object} data - A CodePipeline data event object.
+   */
+  constructor({ data }) {
+    /**
+     * The data object as received from AWS CodePipeline.
+     *
+     * @type {Object}
+     */
+    this.data = data;
+    /**
+     * The parsed contents of the `UserParameters` string as defined inside the
+     * action in the CodePipeline resource.
+     *
+     * @type {Object}
+     */
+    this.parameters = JSON.parse(this.data.actionConfiguration.configuration.UserParameters);
+    const inputs = data.inputArtifacts;
+    if (!inputs || inputs.length === 0) {
+      throw inputArtifactsError({});
+    }
+    const mapper = a =&gt; Artifact.toArtifactMapEntry(a, data.artifactCredentials);
+    /**
+     * An array of {@link Artifact} objects which have been made available to
+     * the CodePipeline action definition.
+     *
+     * These artifacts may be referenced by Parameters (Fn::GetParam keys)
+     * as well as Files to be uploaded to Flood.IO.
+     *
+     * @type {String}
+     */
+    this.artifacts = inputs.map(mapper).reduce((memo, [key, val]) =&gt; {
+      const obj = memo;
+      obj[key] = val;
+      return obj;
+    }, {});
+  }
+
+  /**
+   * Retrieve validated (and defaulted) parameters which have been defined inside
+   * the action in the CodePipeline resource.
+   *
+   * @return {Object} valid parameters to be used to construct the state machine input.
+   */
+  async userParameters() {
+    return await validate(this.parameters);
+  }
+
+  /**
+   * Construct the input object that will be used to execute the state machine.
+   *
+   * This function will first validate the parameters defined inside the action,
+   * resolve all remote artifact files (providing Signed URLs in their place)
+   * as well as resolve all values which have been defined as parameter overrides.
+   *
+   * @return {Object} a validated, resolved input object, used to execute the
+   *   state machine.
+   */
+  async input() {
+    const { Files, Flood, Grids: grids, Parameters: params } = await this.userParameters();
+    const files = await new Uploader(Files, this.artifacts).urls();
+    const overrides = await new Parameters(params, this.artifacts).toOverrides();
+    const flood = Object.assign(Flood, { override_parameters: overrides });
+    return { files, flood, grids };
+  }
+
+  /**
+   * This function handles starting the execution of the state machine after
+   * resolving the input it requires.
+   *
+   * Resolving the input involves transforming artifact-references files, as well
+   * as parameter overrides that have been defined, in addition to validating
+   * the parameters which have been designed for the flood &amp; grid test.
+   *
+   * @return {String} the Execution AWS Arn of the state machine.
+   */
+  async perform() {
+    const input = await this.input();
+    return await Start.start(JSON.stringify(input));
+  }
+
+  /**
+   * Start a state machine execution using valid input and return the ARN of the
+   * execution.
+   *
+   * @return {String} the AWS ARN of the Step Functions state machine execution.
+   */
+  static async start(input) {
+    try {
+      const stepfunctions = new StepFunctions({ region: AWS_REGION });
+      const params = { stateMachineArn: STATE_MACHINE, input };
+      const { executionArn } = await stepfunctions.startExecution(params).promise();
+      return executionArn;
+    } catch (err) {
+      throw executionError(err, { arn: STATE_MACHINE });
+    }
+  }
+}
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.0.4)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

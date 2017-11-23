@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../../../">
+  <title data-ice="title">functions/pipeline/pipeline/validate/schema.js | Event Streamer Service</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+<meta name="description" content="Pushes CodePipeline, CodeBuild, Build Logs and CloudFormation updates to IoT"><meta property="og:type" content="website"><meta property="og:url" content="http://unwrapped.notonthehighstreet.com/aws-pipeline-streamer/"><meta property="og:site_name" content="Event Streamer Service"><meta property="og:title" content="Event Streamer Service"><meta property="og:image" content="https://cdn.notonthehighstreet.com/images/header/logos/tag_logo_uk@2x.png"><meta property="og:description" content="Pushes CodePipeline, CodeBuild, Build Logs and CloudFormation updates to IoT"><meta property="og:author" content="https://twitter.com/notonthehighst"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="Event Streamer Service"><meta property="twitter:description" content="Pushes CodePipeline, CodeBuild, Build Logs and CloudFormation updates to IoT"><meta property="twitter:image" content="https://cdn.notonthehighstreet.com/images/header/logos/tag_logo_uk@2x.png"></head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./" style="display: flex; align-items: center;"><img src="./image/brand_logo.png" style="width:34px;"></a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  <a href="test.html" data-ice="testLink">Test</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+<a style="position:relative; top:3px;" href="https://github.com/notonthehighstreet/aws-pipeline-streamer"><img width="20px" src="./image/github.png"></a></header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-AWS_REGION">AWS_REGION</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-FLOODS_PATH">FLOODS_PATH</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-FLOOD_API_KEY">FLOOD_API_KEY</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-FLOOD_API_URI">FLOOD_API_URI</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-GRIDS_PATH">GRIDS_PATH</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-LOG_LEVEL">LOG_LEVEL</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://github.com/trentm/node-bunyan">Logger</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pipeline">pipeline</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-handler">handler</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pipeline-pipeline">pipeline/pipeline</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/functions/pipeline/pipeline/artifact.js~Artifact.html">Artifact</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/functions/pipeline/pipeline/resume.js~Resume.html">Resume</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/functions/pipeline/pipeline/start.js~Start.html">Start</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-FILE_BUCKET">FILE_BUCKET</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-RUNNING">RUNNING</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-STATE_MACHINE">STATE_MACHINE</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-SUCCEEDED">SUCCEEDED</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pipeline-pipeline-parameters">pipeline/pipeline/parameters</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/functions/pipeline/pipeline/parameters/parameters.js~Parameters.html">Parameters</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pipeline-pipeline-uploader">pipeline/pipeline/uploader</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/functions/pipeline/pipeline/uploader/file.js~File.html">File</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/functions/pipeline/pipeline/uploader/uploader.js~Uploader.html">Uploader</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pipeline-pipeline-validate">pipeline/pipeline/validate</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-validate">validate</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-Schema">Schema</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#steps">steps</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-parseFloodResponse">parseFloodResponse</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-transformObjectProps">transformObjectProps</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#steps-create">steps/create</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-handler">handler</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#steps-remove">steps/remove</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-handler">handler</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#steps-results">steps/results</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-handler">handler</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#steps-status">steps/status</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-handler">handler</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">functions/pipeline/pipeline/validate/schema.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/**
+ * This schema defines the keys, properties and valid values that can be included
+ * inside the `UserParameters` key when defining the use of this action inside
+ * CodePipeline.
+ *
+ * @see https://github.com/flood-io/api-docs
+ *
+ * @type {Object}
+ */
+const Schema = {
+  type: &apos;object&apos;,
+  required: [
+    &apos;Flood&apos;,
+    &apos;Files&apos;,
+    &apos;Grids&apos;,
+  ],
+  properties: {
+    Parameters: {
+      type: &apos;object&apos;,
+      default: {},
+      additionalProperties: {
+        oneOf: [
+          {
+            type: &apos;string&apos;,
+          },
+          {
+            type: &apos;object&apos;,
+            required: [
+              &apos;Fn::GetParam&apos;,
+            ],
+            properties: {
+              &apos;Fn::GetParam&apos;: {
+                type: &apos;array&apos;,
+                items: [
+                  {
+                    type: &apos;string&apos;,
+                  },
+                  {
+                    type: &apos;string&apos;,
+                  },
+                  {
+                    type: &apos;string&apos;,
+                  },
+                ],
+              },
+            },
+          },
+        ],
+      },
+    },
+    Flood: {
+      type: &apos;object&apos;,
+      required: [
+        &apos;tool&apos;,
+      ],
+      properties: {
+        tool: {
+          type: &apos;string&apos;,
+          enum: [
+            &apos;jmeter&apos;,
+            &apos;gatling&apos;,
+            &apos;java-selenium-chrome&apos;,
+            &apos;java-selenium-firefox&apos;,
+          ],
+        },
+        name: {
+          type: &apos;string&apos;,
+          regex: &apos;^[_-A-Za-z0-9]+$&apos;,
+        },
+        notes: {
+          type: &apos;string&apos;,
+        },
+        privacy_flag: {
+          type: &apos;string&apos;,
+          default: &apos;private&apos;,
+          enum: [
+            &apos;public&apos;,
+            &apos;private&apos;,
+          ],
+        },
+        threads: {
+          type: &apos;integer&apos;,
+          minimum: 1,
+          default: 2,
+        },
+        rampup: {
+          type: &apos;integer&apos;,
+          minimum: 1,
+        },
+        duration: {
+          type: &apos;integer&apos;,
+          minimum: 1,
+        },
+        override_hosts: {
+          type: &apos;string&apos;,
+        },
+      },
+    },
+    Files: {
+      type: &apos;array&apos;,
+      minItems: 1,
+      uniqueItems: true,
+      items: {
+        type: &apos;string&apos;,
+        pattern: &apos;^.+::.+$&apos;,
+      },
+    },
+    Grids: {
+      type: &apos;array&apos;,
+      minItems: 1,
+      items: {
+        oneOf: [
+          {
+            type: &apos;object&apos;,
+            required: [
+              &apos;uuid&apos;,
+            ],
+            properties: {
+              uuid: {
+                type: &apos;string&apos;,
+              },
+            },
+          },
+          {
+            type: &apos;object&apos;,
+            required: [
+              &apos;region&apos;,
+              &apos;instance_quantity&apos;,
+              &apos;stop_after&apos;,
+            ],
+            properties: {
+              region: {
+                type: &apos;string&apos;,
+              },
+              instance_quantity: {
+                type: &apos;integer&apos;,
+              },
+              stop_after: {
+                type: &apos;integer&apos;,
+              },
+              infrastructure: {
+                type: &apos;string&apos;,
+              },
+              aws_platform: {
+                type: &apos;string&apos;,
+              },
+              aws_tags: {
+                type: &apos;string&apos;,
+              },
+              aws_availability_zone: {
+                type: &apos;string&apos;,
+              },
+              aws_spot_price: {
+                type: &apos;number&apos;,
+              },
+              credential_id: {
+                type: &apos;string&apos;,
+              },
+              aws_vpc_identifier: {
+                type: &apos;string&apos;,
+              },
+              aws_vpc_subnet_public: {
+                type: &apos;string&apos;,
+              },
+              aws_vpc_subnet_private: {
+                type: &apos;string&apos;,
+              },
+              aws_vpc_security_groups: {
+                type: &apos;string&apos;,
+              },
+            },
+          },
+        ],
+      },
+    },
+  },
+};
+
+export default Schema;
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.0.4)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

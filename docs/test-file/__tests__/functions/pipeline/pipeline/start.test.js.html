@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../../../">
+  <title data-ice="title">__tests__/functions/pipeline/pipeline/start.test.js | Event Streamer Service</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+<meta name="description" content="Pushes CodePipeline, CodeBuild, Build Logs and CloudFormation updates to IoT"><meta property="og:type" content="website"><meta property="og:url" content="http://unwrapped.notonthehighstreet.com/aws-pipeline-streamer/"><meta property="og:site_name" content="Event Streamer Service"><meta property="og:title" content="Event Streamer Service"><meta property="og:image" content="https://cdn.notonthehighstreet.com/images/header/logos/tag_logo_uk@2x.png"><meta property="og:description" content="Pushes CodePipeline, CodeBuild, Build Logs and CloudFormation updates to IoT"><meta property="og:author" content="https://twitter.com/notonthehighst"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="Event Streamer Service"><meta property="twitter:description" content="Pushes CodePipeline, CodeBuild, Build Logs and CloudFormation updates to IoT"><meta property="twitter:image" content="https://cdn.notonthehighstreet.com/images/header/logos/tag_logo_uk@2x.png"></head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./" style="display: flex; align-items: center;"><img src="./image/brand_logo.png" style="width:34px;"></a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  <a href="test.html" data-ice="testLink">Test</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+<a style="position:relative; top:3px;" href="https://github.com/notonthehighstreet/aws-pipeline-streamer"><img width="20px" src="./image/github.png"></a></header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-AWS_REGION">AWS_REGION</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-FLOODS_PATH">FLOODS_PATH</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-FLOOD_API_KEY">FLOOD_API_KEY</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-FLOOD_API_URI">FLOOD_API_URI</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-GRIDS_PATH">GRIDS_PATH</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-LOG_LEVEL">LOG_LEVEL</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://github.com/trentm/node-bunyan">Logger</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pipeline">pipeline</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-handler">handler</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pipeline-pipeline">pipeline/pipeline</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/functions/pipeline/pipeline/artifact.js~Artifact.html">Artifact</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/functions/pipeline/pipeline/resume.js~Resume.html">Resume</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/functions/pipeline/pipeline/start.js~Start.html">Start</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-FILE_BUCKET">FILE_BUCKET</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-RUNNING">RUNNING</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-STATE_MACHINE">STATE_MACHINE</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-SUCCEEDED">SUCCEEDED</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pipeline-pipeline-parameters">pipeline/pipeline/parameters</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/functions/pipeline/pipeline/parameters/parameters.js~Parameters.html">Parameters</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pipeline-pipeline-uploader">pipeline/pipeline/uploader</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/functions/pipeline/pipeline/uploader/file.js~File.html">File</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/functions/pipeline/pipeline/uploader/uploader.js~Uploader.html">Uploader</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pipeline-pipeline-validate">pipeline/pipeline/validate</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-validate">validate</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-Schema">Schema</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#steps">steps</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-parseFloodResponse">parseFloodResponse</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-transformObjectProps">transformObjectProps</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#steps-create">steps/create</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-handler">handler</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#steps-remove">steps/remove</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-handler">handler</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#steps-results">steps/results</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-handler">handler</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#steps-status">steps/status</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-handler">handler</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">__tests__/functions/pipeline/pipeline/start.test.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/* eslint-disable import/no-unresolved */
+
+import Start from &apos;@functions/pipeline/pipeline/start&apos;;
+import Artifact from &apos;@functions/pipeline/pipeline/artifact&apos;;
+
+import faker from &apos;faker&apos;;
+import AWS from &apos;aws-sdk-mock&apos;;
+import Zip from &apos;node-zip&apos;;
+
+describe(&apos;Start&apos;, () =&gt; {
+  const executionArn = faker.random.uuid();
+
+  const artifactName = faker.random.word();
+
+  const key = faker.random.word();
+
+  const val = faker.internet.url();
+
+  const jsonFile = JSON.stringify({ [key]: val });
+
+  const jsonFileName = faker.system.fileName();
+
+  const jmxFile = faker.random.words();
+
+  const jmxFileName = faker.system.fileName();
+
+  beforeEach(() =&gt; {
+    const zipFile = new Zip();
+    zipFile.file(jsonFileName, jsonFile);
+    zipFile.file(jmxFileName, jmxFile);
+    AWS.mock(&apos;S3&apos;, &apos;getObject&apos;, (params, cb) =&gt; {
+      process.nextTick(() =&gt; {
+        const zipped = zipFile.generate({ base64: false, compression: &apos;DEFLATE&apos; });
+        cb(null, { Body: new Buffer(zipped, &apos;binary&apos;) });
+      });
+    });
+  });
+
+  beforeEach(() =&gt; {
+    AWS.mock(&apos;S3&apos;, &apos;putObject&apos;, (params, cb) =&gt; {
+      process.nextTick(() =&gt; { cb(null, {}); });
+    });
+  });
+
+  beforeEach(() =&gt; {
+    AWS.mock(&apos;S3&apos;, &apos;getSignedUrl&apos;, (params, cb) =&gt; {
+      process.nextTick(() =&gt; { cb(null, faker.internet.url()); });
+    });
+  });
+
+  beforeEach(() =&gt; {
+    AWS.mock(&apos;StepFunctions&apos;, &apos;startExecution&apos;, (params, cb) =&gt; {
+      process.nextTick(() =&gt; { cb(null, { executionArn }); });
+    });
+  });
+
+  afterEach(() =&gt; {
+    AWS.restore(&apos;S3&apos;, &apos;getObject&apos;);
+    AWS.restore(&apos;S3&apos;, &apos;putObject&apos;);
+    AWS.restore(&apos;S3&apos;, &apos;getSignedUrl&apos;);
+    AWS.restore(&apos;StepFunctions&apos;, &apos;startExecution&apos;);
+  });
+
+  const job = {
+    data: {
+      actionConfiguration: {
+        configuration: {
+          UserParameters: JSON.stringify({
+            Flood: {
+              tool: &apos;jmeter&apos;,
+            },
+            Parameters: {
+              url: {
+                &apos;Fn::GetParam&apos;: [artifactName, jsonFileName, key],
+              },
+            },
+            Files: [
+              `${artifactName}::${jmxFileName}`,
+            ],
+            Grids: [{
+              uuid: faker.random.uuid(),
+            }],
+          }),
+        },
+      },
+      inputArtifacts: [
+        {
+          location: {
+            s3Location: {
+              bucketName: faker.random.word(),
+              objectKey: faker.random.uuid(),
+            },
+          },
+          name: artifactName,
+        },
+      ],
+      artifactCredentials: {
+        secretAccessKey: faker.random.uuid(),
+        sessionToken: faker.random.uuid(),
+        accessKeyId: faker.random.uuid(),
+      },
+    },
+  };
+
+  describe(&apos;#new&apos;, () =&gt; {
+    describe(&apos;when the job is valid&apos;, () =&gt; {
+      it(&apos;correctly assigns properties&apos;, () =&gt; {
+        const start = new Start(job);
+        expect(start.data).toEqual(job.data);
+        expect(start.parameters).toEqual(expect.any(Object));
+        expect(start.artifacts).toEqual(expect.objectContaining({
+          [artifactName]: expect.any(Artifact),
+        }));
+      });
+    });
+
+    describe(&apos;when there are no input artifacts&apos;, () =&gt; {
+      const invalidJob = {
+        data: {
+          actionConfiguration: {
+            configuration: {
+              UserParameters: JSON.stringify({}),
+            },
+          },
+          inputArtifacts: [],
+        },
+      };
+
+      it(&apos;throws an error&apos;, () =&gt; expect(() =&gt; new Start(invalidJob)).toThrow(Error));
+    });
+  });
+
+  describe(&apos;#userParameters&apos;, () =&gt; {
+    describe(&apos;when data is valid&apos;, () =&gt; {
+      it(&apos;returns the correct values&apos;, () =&gt; {
+        const start = new Start(job);
+        return expect(start.userParameters()).resolves.toEqual(expect.objectContaining({
+          Files: expect.arrayContaining([expect.any(String)]),
+          Flood: expect.any(Object),
+          Grids: expect.arrayContaining([expect.any(Object)]),
+          Parameters: expect.any(Object),
+        }));
+      });
+    });
+
+    describe(&apos;when data is not present&apos;, () =&gt; {
+      it(&apos;rejects with an error&apos;, () =&gt; {
+        const start = new Start(job);
+        start.parameters = {};
+        return expect(start.userParameters()).rejects.toEqual(expect.any(Error));
+      });
+    });
+
+    describe(&apos;when data is not valid&apos;, () =&gt; {
+      const invalidUserParameters = {
+        Flood: {
+          tool: &apos;jmeter&apos;,
+        },
+        Grids: [{
+          uuid: faker.random.uuid(),
+        }],
+      };
+
+      it(&apos;rejects with an error&apos;, () =&gt; {
+        const start = new Start(job);
+        start.parameters = invalidUserParameters;
+        return expect(start.userParameters()).rejects.toEqual(expect.any(Error));
+      });
+    });
+  });
+
+  describe(&apos;#input&apos;, () =&gt; {
+    describe(&apos;when a file artifact exists&apos;, () =&gt; {
+      describe(&apos;when a file is uploaded&apos;, () =&gt; {
+        describe(&apos;when a parameter artifact exists&apos;, () =&gt; {
+          it(&apos;returns a valid state machine input object&apos;, () =&gt; {
+            const start = new Start(job);
+            return expect(start.input()).resolves.toEqual(expect.objectContaining({
+              files: expect.arrayContaining([
+                expect.stringMatching(/^https?:\/\//),
+              ]),
+              flood: expect.objectContaining({
+                override_parameters: expect.stringMatching(new RegExp(`-Durl=&quot;${val}&quot;`)),
+              }),
+              grids: expect.arrayContaining([
+                expect.any(Object),
+              ]),
+            }));
+          });
+        });
+      });
+    });
+  });
+
+  describe(&apos;#perform&apos;, () =&gt; {
+    describe(&apos;when #input resolves&apos;, () =&gt; {
+      it(&apos;executes step functions with the correct parameters&apos;, async () =&gt; {
+        const start = new Start(job);
+        const obj = { [faker.random.uuid()]: faker.random.number() };
+        jest.spyOn(start, &apos;input&apos;).mockImplementation(async () =&gt; obj);
+        const perform = await start.perform();
+        return expect(perform).toEqual(executionArn);
+      });
+    });
+  });
+
+  describe(&apos;#start&apos;, () =&gt; {
+    describe(&apos;when parameters are valid&apos;, async () =&gt; {
+      it(&apos;returns the correct execution arn&apos;, async () =&gt; {
+        const start = new Start(job);
+        const input = await start.input();
+        return expect(Start.start(JSON.stringify(input))).resolves.toEqual(executionArn);
+      });
+    });
+  });
+});
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.0.4)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

@@ -1,0 +1,99 @@
+{
+  "coverage": "96.19%",
+  "expectCount": 105,
+  "actualCount": 101,
+  "files": {
+    "functions/globals.js": {
+      "expectCount": 6,
+      "actualCount": 6,
+      "undocumentLines": []
+    },
+    "functions/logger.js": {
+      "expectCount": 2,
+      "actualCount": 2,
+      "undocumentLines": []
+    },
+    "functions/pipeline/pipeline/artifact.js": {
+      "expectCount": 26,
+      "actualCount": 26,
+      "undocumentLines": []
+    },
+    "functions/pipeline/pipeline/constants.js": {
+      "expectCount": 4,
+      "actualCount": 4,
+      "undocumentLines": []
+    },
+    "functions/pipeline/pipeline/parameters/parameters.js": {
+      "expectCount": 12,
+      "actualCount": 12,
+      "undocumentLines": []
+    },
+    "functions/pipeline/pipeline/resume.js": {
+      "expectCount": 6,
+      "actualCount": 6,
+      "undocumentLines": []
+    },
+    "functions/pipeline/pipeline/start.js": {
+      "expectCount": 11,
+      "actualCount": 11,
+      "undocumentLines": []
+    },
+    "functions/pipeline/pipeline/uploader/file.js": {
+      "expectCount": 14,
+      "actualCount": 14,
+      "undocumentLines": []
+    },
+    "functions/pipeline/pipeline/uploader/uploader.js": {
+      "expectCount": 7,
+      "actualCount": 7,
+      "undocumentLines": []
+    },
+    "functions/pipeline/pipeline/validate/schema.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "functions/pipeline/pipeline/validate/validate.js": {
+      "expectCount": 4,
+      "actualCount": 4,
+      "undocumentLines": []
+    },
+    "functions/pipeline/pipeline.js": {
+      "expectCount": 2,
+      "actualCount": 0,
+      "undocumentLines": [
+        9,
+        11
+      ]
+    },
+    "functions/steps/create/create.js": {
+      "expectCount": 4,
+      "actualCount": 3,
+      "undocumentLines": [
+        7
+      ]
+    },
+    "functions/steps/helper.js": {
+      "expectCount": 3,
+      "actualCount": 2,
+      "undocumentLines": [
+        33
+      ]
+    },
+    "functions/steps/remove/remove.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "functions/steps/results/results.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "functions/steps/status/status.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    }
+  }
+}

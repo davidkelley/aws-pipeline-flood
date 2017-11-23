@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Remove grid suite Handles successful query Calling handler Called endpoint to remove grid 1`] = `
+Array [
+  Array [
+    Object {
+      "auth": Object {
+        "user": "mock-api-key",
+      },
+      "uri": "https://api.flood.io/grids/123123",
+    },
+  ],
+]
+`;
+
+exports[`Remove grid suite Handles successful query Calling handler Invoked callback 1`] = `
+Array [
+  Array [
+    null,
+    Object {
+      "grid": Object {
+        "uuid": "123123",
+      },
+      "result": "mock",
+    },
+  ],
+]
+`;
+
+exports[`Remove grid suite Handles unsuccesful response  Calling handler Returned the error to the callback 1`] = `
+Array [
+  Array [
+    [StatusCodeError: 404 - ""],
+  ],
+]
+`;

@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Helper suite parseFloodResponse Extracts the correct props and returns a new object 1`] = `
+Object {
+  "flood": Object {
+    "uuid": "VCFstUfl0AMdtaKYBo5d7A",
+  },
+  "grid": Object {
+    "uuid": "hg8ZjZcifgsuQvDfcnBONw",
+  },
+  "status": "queued",
+}
+`;
+
+exports[`Helper suite transformObjectProps Remaps the object properties to match a form 1`] = `
+Object {
+  "flood[grids][][infrastructure]": "demand",
+  "flood[grids][][instance_type]": "m4.xlarge",
+  "flood[grids][][region]": "eu-west-1",
+  "flood[grids][][stop_after]": "60",
+  "flood[tool]": "jmeter",
+}
+`;

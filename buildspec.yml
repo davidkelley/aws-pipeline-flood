@@ -1,0 +1,81 @@
+# @see http://docs.aws.amazon.com/codebuild/latest/userguide/build-spec-ref.html
+version: 0.2
+
+env:
+  # These variables are defined by default with the value of "CODEPIPELINE".
+  # This indicates that the real value should be defined by the configuration
+  # of the CodeBuild project.
+  #
+  # This is simply a helper and NOT a requirement; so that we are aware of
+  # which environment variables are/should be available to the
+  # build specification.
+  variables:
+    NODE_ENV: CODEPIPELINE
+  parameter-store:
+    FLOOD_API_KEY: /Secrets/FloodApiKey
+
+phases:
+  install:
+    commands:
+      # Ensure that the aws cli used in this build is the latest version.
+      - echo "Updating AWS CLI..."
+      - pip install --upgrade awscli
+
+      # Create the directory that will be used to garner the files included
+      # inside the output artifact.
+      - echo "Create output directory"
+      - mkdir out
+
+      # Install mustache globally. This library comes bundled with a CLI tool
+      # which will enable us to interpolate values from the environment into
+      # our Open API template, such as $AWS_ACCOUNT_ID
+      - echo "Installing Mustache Globally"
+      - npm install -g mustache
+
+  pre_build:
+    commands:
+      # Using node, log all of the environment variables, as a stringified JSON
+      # object into a file, located at "out/build.json".
+      #
+      # "node -e" allows us to evaluate an inline string of Javascript.
+      - echo "Creating AWS Config file"
+      - node -e 'console.log(JSON.stringify(process.env))' > out/build.json
+
+      # Install all of the NPM dependencies located in package.json.
+      - echo "Installing dependencies"
+      - npm install
+
+  build:
+    commands:
+      # Before bundling the Open API Definition and packaging the Cloudformation
+      # execute linting, testing and validation as defined inside the scripts
+      # section of the package.json file.
+      - echo "Running lint..."
+      - npm run lint
+
+      - echo "Running tests..."
+      - npm run test
+
+      - echo "Packaging..."
+      - npm run build
+
+      # Package the cloudformation file, uploading any relative artifacts to S3
+      # producing a file that can be deployed to AWS.
+      #
+      # @see http://docs.aws.amazon.com/cli/latest/reference/cloudformation/package.html
+      - echo "Compiling Cloudformation (Bucket $S3_BUCKET)..."
+      - aws cloudformation package --template-file service.yml --s3-prefix build --s3-bucket $ARTIFACT_STORE --output-template-file out/template.yml
+
+  post_build:
+    commands:
+      # For debugging purposes, output the artifacts that will become available
+      # to CodePipeline inside the output artifact.
+      - echo "Listing Output"
+      - ls -lR out/
+
+# Define how output artifacts are produced for this build specification.
+artifacts:
+  type: zip
+  discard-paths: yes
+  files:
+    - out/**/*
