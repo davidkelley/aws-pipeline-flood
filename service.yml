@@ -115,7 +115,7 @@ Resources:
     Properties:
       Handler: pipeline.handler
       Runtime: nodejs6.10
-      CodeUri: ../out
+      CodeUri: ./out
       Timeout: 10
       Role: !GetAtt ControlFunctionExecutionRole.Arn
       Environment:
@@ -183,7 +183,7 @@ Resources:
     Properties:
       Handler: results.handler
       Runtime: nodejs6.10
-      CodeUri: ../out
+      CodeUri: ./out
       Timeout: 10
       Role: !GetAtt FloodResultsFunctionExecutionRole.Arn
 
@@ -228,7 +228,7 @@ Resources:
     Properties:
       Handler: remove.handler
       Runtime: nodejs6.10
-      CodeUri: ../out
+      CodeUri: ./out
       Timeout: 10
       Role: !GetAtt DeleteGridFunctionExecutionRole.Arn
 
@@ -273,7 +273,7 @@ Resources:
     Properties:
       Handler: status.handler
       Runtime: nodejs6.10
-      CodeUri: ../out
+      CodeUri: ./out
       Timeout: 10
       Role: !GetAtt FloodStatusFunctionExecutionRole.Arn
 
@@ -318,7 +318,7 @@ Resources:
     Properties:
       Handler: create.handler
       Runtime: nodejs6.10
-      CodeUri: ../out
+      CodeUri: ./out
       Timeout: 10
       Role: !GetAtt CreateFloodFunctionExecutionRole.Arn
 
