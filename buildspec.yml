@@ -11,8 +11,7 @@ env:
   # build specification.
   variables:
     NODE_ENV: CODEPIPELINE
-  parameter-store:
-    FLOOD_API_KEY: /Secrets/FloodApiKey
+    FLOOD_API_KEY: CODEPIPELINE
 
 phases:
   install:

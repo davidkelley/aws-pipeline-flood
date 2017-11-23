@@ -1,6 +1,6 @@
 AWSTemplateFormatVersion: "2010-09-09"
 
-Description: "Creates a build, test and deployment pipeline."
+Description: "[Utility] Flood.IO Integration CI/CD Pipeline"
 
 # You can use the optional Parameters section to pass values into your template
 # when you create a stack. With parameters, you can create templates that are
@@ -45,30 +45,16 @@ Parameters:
     Description: |
       Branch to use from the repository.
 
-  # A logical name for the project inside AWS. The project is used, in combination
-  # with the branch to produce unique physical resource names, where required.
-  #
-  # Due to AWS naming restrictions and where this parameter is used to
-  # provide uniqueness it is restricted to alpha-numeric characters only.
-  Project:
-    Type: String
-    AllowedPattern: "^[-_a-zA-Z0-9]+$"
-    ConstraintDescription: |
-      Only alpha numeric characters, as well as "-" and "_" are allowed.
-    Description: |
-      The logical name of this project identified inside AWS.
-
   # @secret
   #
   # This key is located inside Parameter Store and validates that it exists before
   # the template executes.
   FloodApiKey:
-    Type: AWS::SSM::Parameter::Name
+    Type: AWS::SSM::Parameter::Value<String>
+    Default: "/Secrets/FloodApiKey"
     Description: |
       The Flood.IO API Key parameter name used to communicate with the flood account.
-    Default: "/Secrets/FloodApiKey"
     NoEcho: true
-
 
 # The required Resources section declares the AWS resources that you want to
 # include in the stack, such as a CodePipeline, CodeBuild and IAM Resources.
@@ -249,6 +235,8 @@ Resources:
             Value: !Ref PipelineArtifactStore
           - Name: AWS_ACCOUNT_ID
             Value: !Ref AWS::AccountId
+          - Name: FLOOD_API_KEY
+            Value: !Ref FloodApiKey
       Artifacts:
         Type: CODEPIPELINE
 
