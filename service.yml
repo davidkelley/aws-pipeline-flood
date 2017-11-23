@@ -2,7 +2,7 @@ AWSTemplateFormatVersion: "2010-09-09"
 
 Transform: AWS::Serverless-2016-10-31
 
-Description: "Deploys a State Machine that controls Flood.IO grids and load tests"
+Description: "[Pipeline] [Utility] Deploys a State Machine that controls Flood.IO grids and load tests"
 
 Parameters:
 

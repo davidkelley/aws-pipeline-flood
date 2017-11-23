@@ -1,6 +1,6 @@
 AWSTemplateFormatVersion: "2010-09-09"
 
-Description: "[Utility] Flood.IO Integration CI/CD Pipeline"
+Description: "[Pipeline] [Utility] AWS CodePipeline Flood.IO Integration Pipeline"
 
 # You can use the optional Parameters section to pass values into your template
 # when you create a stack. With parameters, you can create templates that are
@@ -75,7 +75,8 @@ Resources:
             - Update
       State: ENABLED
       Targets:
-        - Arn: !Sub "arn:${AWS::Partition}:codepipeline:${AWS::Region}:${Pipeline}"
+        - Id: StartPipelineExecution
+          Arn: !Sub "arn:${AWS::Partition}:codepipeline:${AWS::Region}:${AWS::AccountId}:${Pipeline}"
           RoleArn: TriggerRuleRole.Arn
 
   TriggerRuleRole:
@@ -90,7 +91,7 @@ Resources:
         Version: '2012-10-17'
       Path: /
       Policies:
-        - PolicyName: CloudFormationRole
+        - PolicyName: LimitedCodePipelineStartExecution
           PolicyDocument:
             Version: '2012-10-17'
             Statement:
@@ -98,7 +99,7 @@ Resources:
                   - codepipeline:StartPipelineExecution
                 Effect: Allow
                 Resource:
-                  - !Sub "arn:${AWS::Partition}:codepipeline:${AWS::Region}:${Pipeline}"
+                  - !Sub "arn:${AWS::Partition}:codepipeline:${AWS::Region}:${AWS::AccountId}:${Pipeline}"
 
   # This S3 bucket stores artifacts created by both CodeBuild and CodePipeline.
   # Artifacts are passed around the pipeline and can be accessed by different actions.
