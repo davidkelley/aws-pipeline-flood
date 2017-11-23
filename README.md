@@ -1,5 +1,3 @@
-![Logo][logo]
-
 # CodePipeline Flood.IO Action
 
 ![Architecture][architecture]
@@ -56,50 +54,4 @@ An example action definition inside a CodePipeline CloudFormation resource defin
 
 For a full definition of what you can define inside the `UserParameters` key, see [the JSON Schema file](/functions/pipeline/pipeline/validate/schema.js).
 
-[logo]: /.github/images/logo-small.png
 [architecture]: /.github/images/Flood.png
-
-
-Event structure needs to follow this structure to be correctly read by flood.io.
-The files list needs to be a list of presigned/public urls that the script can download.
-
-NOTE, empty values are not allowed
-NOTE2, if the `grid uuid` prop is set, it has to match an existing grid or it will return 404
-```
-{
-  files: [
-    'https://s3-eu-west-1.amazonaws.com/floodfiles/floodtest.jmx',
-  ],
-  flood: {
-    tool: 'jmeter',
-    // name: '',
-    // notes: '',
-    // tag_list: '',
-    // privacy_flag: '',
-    // threads: '',
-    // rampup: '',
-    // duration: '',
-    // override_hosts: '',
-    // override_parameters: '',
-    grids: [
-      {
-        // uuid: 'existing-grid-id',
-        region: 'eu-west-1',
-        instance_type: 'm4.xlarge',
-        // instance_quantity: '',
-        stop_after: '60',
-        infrastructure: 'demand',
-        // aws_platform: '',
-        // aws_tags: '',
-        // aws_availability_zone: '',
-        // aws_spot_price: '',
-        // credential_id: '',
-        // aws_vpc_identifier: '',
-        // aws_vpc_subnet_public: '',
-        // aws_vpc_subnet_private: '',
-        // aws_vpc_security_groups: '',
-      },
-    ],
-  },
-};
-```
