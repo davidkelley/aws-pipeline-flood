@@ -77,7 +77,7 @@ Resources:
       Targets:
         - Id: StartPipelineExecution
           Arn: !Sub "arn:${AWS::Partition}:codepipeline:${AWS::Region}:${AWS::AccountId}:${Pipeline}"
-          RoleArn: TriggerRuleRole.Arn
+          RoleArn: !GetAtt TriggerRuleRole.Arn
 
   TriggerRuleRole:
     Type: AWS::IAM::Role
